@@ -214,6 +214,16 @@ class ProblemSolutions {
      *   undirected graph of 3 nodes (index 0 to 2).
      *   All three nodes are connected by at least one
      *   edge. So they form on large group.
+     *
+     * Pseudocode: 
+     * Convert the adjacency matric to an adjacency list 
+     * Ensure all nodes exist in the list--even if they have no edges
+     * Initialize a visited array to keep track of explored nodes
+     * Initialize a group counter to 0
+     * For each unvisited node,
+     *    perform DFS to visit all nodes in its component
+     *    increment group counter
+     * Return the total number of groups count 
      */
 
     public int numGroups(int[][] adjMatrix) {
@@ -248,4 +258,18 @@ class ProblemSolutions {
         return -1;
     }
 
+    /*
+     * Pseudocode for the DFS helper metod 
+     * It will perform Depth First Search to visit all connected nodes in the same component
+     * node - The current node to visit
+     * graph - The adjacency list 
+     * visited - Array tracking whether each node has been visited
+     * Mark the current node as visited
+     * For each neighbor of the node, 
+     *     If the neightbor hasn't been visited
+     *        Recursively call DFS on that neighbor 
+     */
+    private void dfs(int node, Map<Integer, List<Integer>> graph, boolean[] visited){
+
+    }
 }

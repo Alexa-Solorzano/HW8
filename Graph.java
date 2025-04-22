@@ -100,6 +100,20 @@ public class Graph {
    * this case as a node that has no incoming edges. If no root vertex is found
    * and/or more than one root vertex, then return -1.
    * 
+   * Important information includes 
+   * -- keeping track of how many edges point to each vertext because the root should be the only one with zero in-degrees
+   * -- build a in-degree array based on the graph's structure & relationships
+   * -- knowing if there are multiple zero in-degrees because that would indicate that there are multiple candidates which would be invalid
+   * -- keep track of potential root candidates to return its value later
+   * Pseudocode: 
+   * Initialize an array to keep track of in-degrees of all vertices 
+   * Traverse the adjacency list to count in-degrees for each vertex
+   * Loop through in-degree array
+   *  if in-digree is 0, check if a root is already found 
+   *  if yes, return -1 (invalid)
+   *  otherwise, store the index of this root 
+   *  if no vertex with in-degree 0 was found, return -1
+   *  otherwise, return the value of the root vertex
    */
   
   public int findRoot() {

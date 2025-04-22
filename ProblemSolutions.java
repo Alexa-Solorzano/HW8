@@ -107,9 +107,9 @@ class ProblemSolutions {
                                         prerequisites); 
         //Create in-degree array to count incoming edges for each node
         int[] inDegree = new int[numNodes];
-        for(int i = 0; i < numNodes; i++){
-            for(int j = 0; j < adj[i].size(); j++){
-                int neighbor = adj[i].get(j);
+        for(int i = 0; i < numNodes; i++){ //Loop over each node to calculate in-degrees
+            for(int j = 0; j < adj[i].size(); j++){ //Loop over each neighbor (outgoing edge) of node i
+                int neighbor = adj[i].get(j); //Get the destination node
                 inDegree[neighbor]++; //Count incoming edge for neighbor 
             }
         }
@@ -123,16 +123,17 @@ class ProblemSolutions {
         }
         //Process nodes in queue--topological order
         int count = 0; //Tracks how many nodes have been "taken" successfully
+        
         while(!queue.isEmpty()) {
-            int current = queue.poll();
+            int current = queue.poll(); //Remobe the front node from the queue
             count++;
             
             //Reduce in-degree for neighbors
             for(int j = 0; j < adj[current].size(); j++){
-                int neighbor = adj[current].get(j);
-                inDegree[neighbor]--;
-                if(inDegree[neighbor] == 0){
-                    queue.offer(neighbor); //Ready to be taken
+                int neighbor = adj[current].get(j); //Get the neighbor
+                inDegree[neighbor]--; //Reduce its in-degree (one prereq is now done)
+                if(inDegree[neighbor] == 0){ //If in-degree becomes 0, it's ready to be taken
+                    queue.offer(neighbor); //Add it to the queue
                 }
             }
         }
@@ -253,9 +254,23 @@ class ProblemSolutions {
             }
         }
 
-        // YOUR CODE GOES HERE - you can add helper methods, you do not need
-        // to put all code in this method.
-        return -1;
+        //Ensure every node has an empty adjacency list if not already added
+        for(int node = 0; node < numNodes; node++){
+            graph.putIfAbsent(node, new ArrayList<>()); //Create empty list id not present
+        }
+
+        //Helper function to perform Depth First Search (DFS) and mark visited nodes
+        boolean[] visited = new boolean[numNodes];
+        int numGroups = 0; //Counter to track # of groups--connected components
+        //Iterate through all nodes
+        for(int node = 0; node < numNodes; node++){
+            if(!visited[node]){ //If node has not been visited yet
+                //perform DFS from this node to mark all connected nodes
+                dfs(node, graph, visited);
+                numGroups++; //Increment the number of groups--connected components)
+            }
+        }
+        return numGroups;
     }
 
     /*
@@ -270,6 +285,13 @@ class ProblemSolutions {
      *        Recursively call DFS on that neighbor 
      */
     private void dfs(int node, Map<Integer, List<Integer>> graph, boolean[] visited){
-
+        visited[node] = true; //Mark node as visited
+        
+        //Explore all the neighbors of the node
+        for(int neighbor : graph.get(node)){
+            if(!visited[neighbor]){
+                dfs(neighbor, graph, visited);
+            }
+        }
     }
 }

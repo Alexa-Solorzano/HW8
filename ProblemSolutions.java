@@ -105,12 +105,40 @@ class ProblemSolutions {
         // Build directed graph's adjacency list
         ArrayList<Integer>[] adj = getAdjList(numExams, 
                                         prerequisites); 
+        //Create in-degree array to count incoming edges for each node
+        int[] inDegree = new int[numNodes];
+        for(int i = 0; i < numNodes; i++){
+            for(int j = 0; j < adj[i].size(); j++){
+                int neighbor = adj[i].get(j);
+                inDegree[neighbor]++; //Count incoming edge for neighbor 
+            }
+        }
 
-        // ADD YOUR CODE HERE - ADD YOUR NAME / SECTION AT TOP OF FILE
-        return false;
-
+        //Initialize a queue and add nodes with in-degree 0 (no prerequisites)
+        Queue<Integer> queue = new LinkedList<>();
+        for(int i = 0; i < numNodes; i++){
+            if(inDegree[i] == 0){
+                queue.offer(i); //Node can be taken first
+            }
+        }
+        //Process nodes in queue--topological order
+        int count = 0; //Tracks how many nodes have been "taken" successfully
+        while(!queue.isEmpty()) {
+            int current = queue.poll();
+            count++;
+            
+            //Reduce in-degree for neighbors
+            for(int j = 0; j < adj[current].size(); j++){
+                int neighbor = adj[current].get(j);
+                inDegree[neighbor]--;
+                if(inDegree[neighbor] == 0){
+                    queue.offer(neighbor); //Ready to be taken
+                }
+            }
+        }
+        //If all nodes were processed, return true. Otherwise, there is a cycle
+        return count == numNodes;
     }
-
 
     /**
      * Method getAdjList

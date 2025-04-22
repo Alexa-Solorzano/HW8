@@ -80,7 +80,21 @@ class ProblemSolutions {
      * 
      * As per class notes, this method will be conducting a  Depth-First Search (DFS) algorithm to traverse/search through the graph
      * Specifically, topological sorting will be most beneficial. It helps "In scheduling tasks or courses (like prerequisite chains), DFS can help in topological sorting to determine the order of tasks, ensuring that dependencies are respected."
-     * 
+     * This will require processing all nodes/exams that have no prereqs first
+     * Once one is taken, reducing the in-degrees of its dependent exams 
+     * Then have that dependent exam that's no in-degree of 0 ready to be taken next
+     * This process would be easy to achieve using a queue. This is because its FIFO (FIRST-IN FIRST-OUT) property which can ensure that exams are taken in the order they become available.
+     *
+     * Pseudocode: 
+     * Build an adjacency list from the list of prereqs
+     * Create & populate an in-degree array which will count the incoming edges for each node
+     * Add all nodes with in-degree 0 to a queue 
+     * While the queue is not empty, 
+     *    Dequeue a node/exam and increment the count of processed nodes
+     *    For each of its neighbors, reduce their in-degree
+     *    If a neightbor's in-degree becomes 9, add it to the queue
+     * After processing, if the number of processed nodes equals numExams, return true
+     * Otherwise, return false (a cycle was detected)
      */
 
     public boolean canFinish(int numExams, 

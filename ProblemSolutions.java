@@ -70,6 +70,11 @@ class ProblemSolutions {
      * @param numExams          - number of exams, which will produce a graph of n nodes
      * @param prerequisites     - 2-dim array of directed edges.
      * @return boolean          - True if all exams can be taken, else false.
+     *
+     * Next Steps:
+     * The in-degree array will show which exams are ready to be taken (requiring no prerequesites left) and help process the graph in valid order. It will help detect the cycles in the graph
+     * The in-degree of a node (which represents the exam) is the # of incoming edges, aka how many prerequisites exams must be taken before that exam
+     * 
      */
 
     public boolean canFinish(int numExams, 

@@ -117,8 +117,33 @@ public class Graph {
    */
   
   public int findRoot() {
+    int[] inDegree = new int[numVertices]; //Initialize in-degree array
+    //Count in-degrees by scanning adjacency list
+    for(int current = 0; current < numVertices; current++){
+      LinkedList<Integer> neighbors = adjListArr[current];
+      for(int j = 0; j < neighbors.size(); j++){
+        int destination = neighbors.get(j);
+        inDegree[destination]++; //Count the incoming edges to destination
+      }
+    }
 
-    // ADD YOUR CODE HERE - DO NOT FORGET TO ADD YOUR NAME/SECTION AT TOP OF FILE
-    return -1;
+    int root = -1; //Initialize root as not found
+
+    //Find vertex with in-degree of 0
+    for(int i = 0; i < numVertices; i++){
+      if(inDegree[i] == 0){
+        if(root != -1){
+          return -1; //More than one root found
+        }
+        root = i;
+      }
+    }
+    //If no root found, return -1
+    if(root == -1){
+      return -1;
+    }
+
+    //Return the value of the root vertex
+    return vertexValues.get(root);
   } 
 }

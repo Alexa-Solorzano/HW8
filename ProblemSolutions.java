@@ -74,6 +74,12 @@ class ProblemSolutions {
      * Next Steps:
      * The in-degree array will show which exams are ready to be taken (requiring no prerequesites left) and help process the graph in valid order. It will help detect the cycles in the graph
      * The in-degree of a node (which represents the exam) is the # of incoming edges, aka how many prerequisites exams must be taken before that exam
+     * By building a in-degree array, the start will be easier to identify because nodes with an in-degree of 0 will have no pre-reqs and can be taken first
+     * The array also allows to track the progress by reducing the in-degrees of its neighbors (which represent dependent exams) & when a neighbor's in-degree drops to 0 = all its prereqs are complete and can safely take it next
+     * The array can detect cycles (never reaching in-degree 0) because if at the end all the nodes in the array have not been processed it will show that a cycle exists and it will return false (unable to complete all exams)
+     * 
+     * As per class notes, this method will be conducting a  Depth-First Search (DFS) algorithm to traverse/search through the graph
+     * Specifically, topological sorting will be most beneficial. It helps "In scheduling tasks or courses (like prerequisite chains), DFS can help in topological sorting to determine the order of tasks, ensuring that dependencies are respected."
      * 
      */
 
